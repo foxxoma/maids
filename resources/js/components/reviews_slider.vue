@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="review-slider__flex">
 				<div class="review-slider__slider">
-					<div class="overflow--review-slider">
+					<div v-if="reviews" class="overflow--review-slider">
 						<div class="overflow--review-slider_item" v-for="review in reviews.slice().reverse()">
 							<h3 class="overflow--review-slider_item_text overflow--review-slider_item_title">{{review.name}}</h3>
 							<p class="overflow--review-slider_item_text overflow--review-slider_item_description">{{review.review}}</p>
@@ -50,35 +50,62 @@
 		methods: {
 			getReviews()
 			{
-				axios.post('/reviews/index/')
+				fetch('/api/reviews/getAll',
+				{
+					method: 'POST',
+					headers: {
+				    	'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+				    	'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						"_token": document.querySelector('meta[name=csrf-token]').content
+					})
+				})
 				.then(response => {
-					this.reviews = response.data;
+					return response.json()
+				})
+				.then(data => {
+					this.reviews = data;
 				})
 				.catch(e => {
+					alert('Возникла ошибка')
 					console.log(e);
 				})
 			},
 			formPost(e)
 			{
 				e.preventDefault();
-				
+
 				if(!this.name || !this.reviewForm)
 				{
 					alert('есть пустые поля');
 					return;
 				}
 
-				axios.post('/reviews/form/', {
-					name: this.name,
-					review: this.reviewForm
+				fetch('/api/reviews/setReview',
+				{
+					method: 'POST',
+					headers: {
+				    	'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+				    	'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'_token': document.querySelector('meta[name=csrf-token]').content,
+						'name': this.name,
+						'review': this.reviewForm
+					})
 				})
 				.then(response => {
+					return response.json()
+				})
+				.then(data => {
 					this.reviews.push({'name': this.name, 'review': this.reviewForm});
 					this.reviewForm = '';
 					this.name = '';
 					alert('отзыв оставлен');
 				})
 				.catch(e => {
+					alert('Возникла ошибка')
 					console.log(e);
 				})
 			}

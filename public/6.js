@@ -59,9 +59,21 @@ __webpack_require__.r(__webpack_exports__);
     getReviews: function getReviews() {
       var _this = this;
 
-      axios.post('/reviews/index/').then(function (response) {
-        _this.reviews = response.data;
+      fetch('/api/reviews/getAll', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "_token": document.querySelector('meta[name=csrf-token]').content
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this.reviews = data;
       })["catch"](function (e) {
+        alert('Возникла ошибка');
         console.log(e);
       });
     },
@@ -75,10 +87,20 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.post('/reviews/form/', {
-        name: this.name,
-        review: this.reviewForm
+      fetch('/api/reviews/setReview', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          '_token': document.querySelector('meta[name=csrf-token]').content,
+          'name': this.name,
+          'review': this.reviewForm
+        })
       }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
         _this2.reviews.push({
           'name': _this2.name,
           'review': _this2.reviewForm
@@ -88,6 +110,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.name = '';
         alert('отзыв оставлен');
       })["catch"](function (e) {
+        alert('Возникла ошибка');
         console.log(e);
       });
     }
@@ -216,36 +239,38 @@ var render = function() {
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "review-slider__flex" }, [
         _c("div", { staticClass: "review-slider__slider" }, [
-          _c(
-            "div",
-            { staticClass: "overflow--review-slider" },
-            _vm._l(_vm.reviews.slice().reverse(), function(review) {
-              return _c(
+          _vm.reviews
+            ? _c(
                 "div",
-                { staticClass: "overflow--review-slider_item" },
-                [
-                  _c(
-                    "h3",
-                    {
-                      staticClass:
-                        "overflow--review-slider_item_text overflow--review-slider_item_title"
-                    },
-                    [_vm._v(_vm._s(review.name))]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    {
-                      staticClass:
-                        "overflow--review-slider_item_text overflow--review-slider_item_description"
-                    },
-                    [_vm._v(_vm._s(review.review))]
+                { staticClass: "overflow--review-slider" },
+                _vm._l(_vm.reviews.slice().reverse(), function(review) {
+                  return _c(
+                    "div",
+                    { staticClass: "overflow--review-slider_item" },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass:
+                            "overflow--review-slider_item_text overflow--review-slider_item_title"
+                        },
+                        [_vm._v(_vm._s(review.name))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        {
+                          staticClass:
+                            "overflow--review-slider_item_text overflow--review-slider_item_description"
+                        },
+                        [_vm._v(_vm._s(review.review))]
+                      )
+                    ]
                   )
-                ]
+                }),
+                0
               )
-            }),
-            0
-          )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _vm._m(0)

@@ -31719,22 +31719,22 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component("header-component", function () {
-  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/header.vue */ "./resources/js/components/header.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./components/header.vue */ "./resources/js/components/header.vue"));
 });
 Vue.component("footer-component", function () {
-  return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/footer.vue */ "./resources/js/components/footer.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./components/footer.vue */ "./resources/js/components/footer.vue"));
 });
 Vue.component("order-component", function () {
-  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/order.vue */ "./resources/js/components/order.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/order.vue */ "./resources/js/components/order.vue"));
 });
 Vue.component("reviews_slider-component", function () {
-  return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/reviews_slider.vue */ "./resources/js/components/reviews_slider.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/reviews_slider.vue */ "./resources/js/components/reviews_slider.vue"));
 });
 Vue.component("index_content-component", function () {
-  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/index_content.vue */ "./resources/js/components/index_content.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/index_content.vue */ "./resources/js/components/index_content.vue"));
 });
 Vue.component("index_reviews-component", function () {
-  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/index_reviews.vue */ "./resources/js/components/index_reviews.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./components/index_reviews.vue */ "./resources/js/components/index_reviews.vue"));
 });
 var app = new Vue({
   el: '#app'
@@ -31781,8 +31781,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/andej/projects/maids/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/andej/projects/maids/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Applications/MAMP/htdocs/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

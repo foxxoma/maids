@@ -44,7 +44,6 @@
 	.info-block
 	{
 		background: #333333;
-		margin-bottom: 90px;
 	}
 	.info-block__flex
 	{

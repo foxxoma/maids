@@ -1,12 +1,12 @@
 <template>
 	<section class="more-info">
 		<div class="container">
-			<div class="more-info__flex">
+			<div v-if="reviews[0]" class="more-info__flex">
 				<div class="more-info__first">
 					<span class="more-info__text--title">{{reviews[0].name}}</span>
 					<div class="more-info__description">{{reviews[0].review}}</div>
 				</div>
-				<div class="more-info__second">
+				<div v-if="reviews[1]" class="more-info__second">
 					<span class="more-info__text--title">{{reviews[1].name}}</span>
 					<div class="more-info__description">{{reviews[1].review}}</div>
 				</div>
@@ -29,12 +29,25 @@
 		methods: {
 			getReviews()
 			{
-				axios.post('/reviews/index/')
+				fetch('/api/reviews/getAll',
+				{
+					method: 'POST',
+					headers: {
+				    	'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+				    	'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						"_token": document.querySelector('meta[name=csrf-token]').content
+					})
+				})
 				.then(response => {
-					this.reviews = response.data.slice().reverse();
-
+					return response.json()
+				})
+				.then(data => {
+					this.reviews = data.slice().reverse();
 				})
 				.catch(e => {
+					alert('Возникла ошибка')
 					console.log(e);
 				})
 			}

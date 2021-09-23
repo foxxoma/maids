@@ -9,8 +9,11 @@
 							<input v-model="phone" type="tel" placeholder="А тут номер телефона"  class="order-form__input-rew" name="tel" pattern=""> 
 							<div class="order--second-flex">
 								<input v-model="date" type="date" value="" class="order-date">
-								<input v-model="time" type="number" id="order-number" name="tentacles" min="1" max="8" class="order-number" value="1">
-							</div>
+								<label>
+								часов
+									<input v-model="time" type="number" id="order-number" name="tentacles" min="1" max="8" class="order-number" value="1">
+								</label>
+							</div>	
 							<span class="order-text">Цена веселья<span class="order-price">{{price}}</span></span>
 							<div class="order-form__btn">
 								<button @click="formPost" class="order-form__btn--style">ЖМИ МЕНЯ!
@@ -65,12 +68,22 @@
 					alert('не корректный номер телефона')
 					return;
 				}
-				axios.post('/orders/form/', {
-					name: this.name,
-					phone: Number(this.phone),
-					date: this.date,
-					time: this.time,
-					price: this.price
+
+				fetch('/orders/setOrder',
+				{
+					method: 'POST',
+					headers: {
+						'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'_token': document.querySelector('meta[name=csrf-token]').content,
+						'name': this.name,
+						'phone': Number(this.phone),
+						'date': this.date,
+						'time': this.time,
+						'price': this.price
+					})
 				})
 				.then(response => {
 					this.name = '';
@@ -81,6 +94,7 @@
 					alert('Заказ принят');
 				})
 				.catch(e => {
+					alert('Возникла ошибка')
 					console.log(e);
 				})
 			},
